@@ -1,3 +1,3 @@
-curl -X POST http://localhost:3000/user/register \
+curl -X POST http://localhost:3000/api/users/register \
   -H "Content-Type: application/json" \
-  -d '{ "username": "newuser","password": "securepassword123" }'
+  -d '{"username": "novousuario2", "password": "senhasegura123"}' 

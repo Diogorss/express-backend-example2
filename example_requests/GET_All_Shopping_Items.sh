@@ -1,0 +1,7 @@
+#!/bin/bash
+TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjEwYmQ5NGUwOTA4NzRlMTE2NDAxYiIsImlhdCI6MTc0NzAwMzYyOCwiZXhwIjoxNzQ3MDA3MjI4fQ.YsCAbVcAEJpCEZW2Nk4eSAcbwbS-DZf_mCIqcCwWIQA"
+
+echo "Listando todos os itens..."
+curl -X GET http://localhost:3000/api/shopping \
+  -H "Authorization: Bearer $TOKEN"
+echo -e "\n"

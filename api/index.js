@@ -1,24 +1,40 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import db from './database/configdb.js';
-import User from './models/User.js' 
-import userRoute from './routes/user.route.js';
-import exampleRoute from './routes/example.route.js';
+import routes from './routes/index.js'; 
 
-dotenv.config();    
+dotenv.config();
 db.connect();
 
 const app = express();
 
+// Middlewares essenciais
 app.use(express.json());
 
-app.use("/user", userRoute);
-app.use("/secureExampleRoute", exampleRoute);
+// Rotas centralizadas
+app.use('/api', routes); 
+
+// Rota raiz para health check
 app.get('/', (req, res) => {
-    res.send({message: 'Hello World!'});
+  res.status(200).json({ 
+    status: 'online',
+    version: '1.0.0'
+  });
 });
 
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log('Server is running on port http://localhost:${PORT}/');
-});
+
+
+const startServer = () => {
+  app.listen(PORT, () => {
+    console.log(` Servidor operando em http://localhost:${PORT}`);
+  });
+};
+
+
+if (process.env.NODE_ENV !== 'test') {
+  startServer();
+}
+
+export default app; 
