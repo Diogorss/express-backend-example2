@@ -18,7 +18,7 @@ router.post('/', create);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', update);
-router.patch('/:id', update); // Opcional: manter se precisar de atualizações parciais
+router.patch('/:id', update); 
 router.delete('/:id', remove);
 
 export default router;
