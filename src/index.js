@@ -6,11 +6,14 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 dotenv.config();
 db.connect();
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 app.use(express.json());
 
 
