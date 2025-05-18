@@ -12,10 +12,8 @@ dotenv.config();
 db.connect();
 
 const app = express();
-
-app.use(cors({
-  origin: 'express-backend-example2.vercel.app', 
-}));
+app.use(cors());
+app.use(express.json());
 app.use(express.json());
 
 
