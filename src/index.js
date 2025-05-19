@@ -15,7 +15,9 @@ db.connect();
 const corsOptions = {
   origin: [
     'https://shopping-list-frontend-2kq58yywr-diogo-s-projects-11694c74.vercel.app',
-    'https://shopping-list-frontend-ten.vercel.app'
+    'https://shopping-list-frontend-ten.vercel.app',
+    'https://improved-eureka-gj56vqwqjxpcp4g7-5173.app.github.dev',
+    // Adicione qualquer outro domínio que você use para desenvolvimento
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -25,16 +27,16 @@ const corsOptions = {
 
 const app = express( );
 
-
+// Aplicar o middleware CORS com as opções configuradas
 app.use(cors(corsOptions));
 
-
+// Outros middlewares
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
+// Configuração do Swagger
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
