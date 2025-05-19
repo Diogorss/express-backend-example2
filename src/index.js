@@ -12,11 +12,15 @@ dotenv.config();
 db.connect();
 
 
-
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Configuração do CORS
+const corsOptions = {
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
+};
 
 // Aplicar o middleware CORS com as opções configuradas
 app.use(cors(corsOptions));
