@@ -11,34 +11,11 @@ import cors from 'cors';
 dotenv.config();
 db.connect();
 
-// Lista de domínios permitidos em produção
-const allowedOrigins = [
-  'https://shopping-list-frontend-2kq58yywr-diogo-s-projects-11694c74.vercel.app',
-  'https://shopping-list-frontend-ten.vercel.app',
-  'https://improved-eureka-gj56vqwqjxpcp4g7-5173.app.github.dev'
-];
-
-// Configuração dinâmica do CORS
+// Configuração do CORS
 const corsOptions = {
-  origin: function (origin, callback ) {
-    // Permitir requisições sem origem (como apps mobile ou curl)
-    if (!origin) return callback(null, true);
-    
-    // Em desenvolvimento, aceitar qualquer origem
-    if (process.env.NODE_ENV !== 'production') {
-      return callback(null, true);
-    }
-    
-    // Em produção, verificar se a origem está na lista de permitidos
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Bloqueado pelo CORS'));
-    }
-  },
+  origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
   optionsSuccessStatus: 200
 };
 
