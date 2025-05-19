@@ -11,16 +11,30 @@ import cors from 'cors';
 dotenv.config();
 db.connect();
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.json());
+// Configuração do CORS com opções específicas
+const corsOptions = {
+  origin: [
+    'https://shopping-list-frontend-2kq58yywr-diogo-s-projects-11694c74.vercel.app',
+    'https://shopping-list-frontend-ten.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
 
+const app = express( );
+
+
+app.use(cors(corsOptions));
+
+
+app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configuração do Swagger
+
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -44,7 +58,7 @@ app.use(
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.js',
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.js',
     ],
-  })
+  } )
 );
 
 // Rotas da API
@@ -58,7 +72,7 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`Servidor operando em http://localhost:${PORT}`);
+    console.log(`Servidor operando em http://localhost:${PORT}` );
   });
 }
 
