@@ -12,18 +12,20 @@ dotenv.config();
 db.connect();
 
 // Configuração do CORS com opções específicas
+// Configuração do CORS com base no ambiente
 const corsOptions = {
-  origin: [
-    'https://shopping-list-frontend-2kq58yywr-diogo-s-projects-11694c74.vercel.app',
-    'https://shopping-list-frontend-ten.vercel.app',
-    'https://improved-eureka-gj56vqwqjxpcp4g7-5173.app.github.dev',
-    // Adicione qualquer outro domínio que você use para desenvolvimento
-  ],
+  origin: process.env.NODE_ENV === 'production'
+    ? [
+        'https://shopping-list-frontend-2kq58yywr-diogo-s-projects-11694c74.vercel.app',
+        'https://shopping-list-frontend-ten.vercel.app'
+      ]
+    : true, // Permite qualquer origem em ambiente de desenvolvimento
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 };
+
 
 const app = express( );
 
