@@ -16,11 +16,15 @@ const app = express();
 
 // Configuração do CORS
 const corsOptions = {
-  origin: '*', 
+  origin: function (origin, callback) {
+    callback(null, origin);
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 };
+
 
 // Aplicar o middleware CORS com as opções configuradas
 app.use(cors(corsOptions));
