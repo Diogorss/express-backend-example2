@@ -6,32 +6,29 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-// Removida a importação do cors, pois usaremos middleware personalizado
+
 
 dotenv.config();
-
-// Validação de variáveis de ambiente
-if (!process.env.MONGO_URI || !process.env.MONGO_DB_NAME || !process.env.JWT_SECRET) {
-  console.error('Variáveis de ambiente obrigatórias não configuradas');
-  console.error(`MONGO_URI: ${process.env.MONGO_URI ? 'Configurado' : 'Não configurado'}`);
-  console.error(`MONGO_DB_NAME: ${process.env.MONGO_DB_NAME ? 'Configurado' : 'Não configurado'}`);
-  console.error(`JWT_SECRET: ${process.env.JWT_SECRET ? 'Configurado' : 'Não configurado'}`);
-  process.exit(1);
-}
-
-// Conectar ao banco de dados
 db.connect();
 
 const app = express();
 
-// Middleware CORS personalizado e robusto para ambiente serverless
+
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
+  // Permitir qualquer origem
+  const origin = req.headers.origin;
+  res.setHeader('Access-Control-Allow-Origin', origin || '*');
+  
+ 
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   
-  // Responder imediatamente às solicitações OPTIONS
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  
+  
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+ 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -41,7 +38,6 @@ app.use((req, res, next) => {
 
 // Outros middlewares
 app.use(express.json());
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -71,12 +67,6 @@ app.use(
     ],
   } )
 );
-
-// Middleware para tratamento de erros global
-app.use((err, req, res, next) => {
-  console.error('Erro global:', err);
-  res.status(500).json({ message: 'Erro interno do servidor', error: err.message });
-});
 
 // Rotas da API
 app.use('/api', routes);
