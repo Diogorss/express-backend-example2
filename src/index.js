@@ -6,7 +6,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import cors from 'cors';
 
 dotenv.config();
 db.connect();
@@ -14,29 +14,8 @@ db.connect();
 const app = express();
 
 
-app.use((req, res, next) => {
-  // Permitir qualquer origem
-  const origin = req.headers.origin;
-  res.setHeader('Access-Control-Allow-Origin', origin || '*');
-  
- 
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  
-
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  
-  
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  
- 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
-
 // Outros middlewares
+app.use(cors());
 app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
